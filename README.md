@@ -4,6 +4,8 @@
 
 The program enables the generation of Markdown documentation by utilizing a supplied DLL. It analyzes the chosen class and its related components (such as other classes, types, enums), and produces Markdown files for each of them, incorporating XML comments from the code (e.g summaries).
 
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/8eef72c119d8a88811b96a916988870f/image.png)
+
 ## Why?
 
 From a need for a simple way to automate the generation of wikis based on XML comments.
