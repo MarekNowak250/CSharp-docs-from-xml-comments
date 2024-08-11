@@ -1,0 +1,62 @@
+﻿<Window x:Class="DescriptorGenerator.Desktop.NodeDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DescriptorGenerator.Desktop"
+        mc:Ignorable="d"
+        Title="NodeDetailsWindow" Height="450" Width="800">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Foreground="Black"
+                                          FontSize="16">
+                                    <Span><Bold>Description: </Bold></Span>
+                                     <Run Text="{Binding Description}"/>
+            </TextBlock>
+            <TextBlock Foreground="Black"
+                                          FontSize="16">
+                                   <Span><Bold>Type: </Bold></Span>
+                                   <Run Text="{Binding Type}" />
+            </TextBlock>
+            <TextBlock Foreground="Black" Text="Properties:" FontWeight="Bold" Margin="0,0,0,8" Grid.Row ="1"
+                                          FontSize="16">
+            </TextBlock>
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding Properties}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" x:Name="ListViewContainer" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,4,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Foreground="Black"
+                                           FontSize="14">
+                                             <Span><Bold>Name: </Bold></Span>
+                                              <Run Text="{Binding Name, Mode=OneWay}"/>
+                        </TextBlock>
+                        <TextBlock Foreground="Black" Grid.Row="1"
+                                                           FontSize="14">
+                                                     <Span><Bold>Type: </Bold></Span>
+                                                      <Run Text="{Binding Type}"/>
+                        </TextBlock>
+                        <TextBlock Foreground="Black" Grid.Row="2"
+                                                           FontSize="14">
+                                                        <Span><Bold>Description: </Bold></Span>
+                                                      <Run Text="{Binding Description}"/>
+                        </TextBlock>
+                        <Border BorderThickness="0,0,0,1"  Margin="0,8,0,0" BorderBrush="Black" Grid.Row="3"></Border>
+                    </Grid>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
