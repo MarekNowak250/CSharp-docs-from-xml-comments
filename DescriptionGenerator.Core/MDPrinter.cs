@@ -22,7 +22,7 @@
 
             content += string.Format("\n| Parameter | Description | Type |");
             content += string.Format("\n| :- | :- | :- |\n");
-            content += string.Format("{0}", string.Join("\n", handler.Properties.Select(x => $"| {x.Name} | {x.Type} | {x.Description} |")));
+            content += string.Format("{0}", string.Join("\n", handler.Properties.Select(x => $"| {x.Name} | {x.Description} | {x.Type} |")));
 
             return content;
         }

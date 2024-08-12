@@ -15,10 +15,10 @@
             <TextBlock Text="Generate MD files: " VerticalAlignment="Center" FontSize="14"></TextBlock>
             <Button Content="Generate" Padding="8,4" VerticalAlignment="Center" Click="Button_Click"/>
         </StackPanel>
-        <ListView x:Name="Test" Grid.Row="1">
+        <ListView x:Name="Test" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1" Width="{Binding ActualWidth, ElementName=Test}" Padding="6, 4">
+                    <Border BorderBrush="Black" BorderThickness="1" Padding="6, 4">
                         <Expander
                             Background="Transparent"
                             BorderThickness="0"

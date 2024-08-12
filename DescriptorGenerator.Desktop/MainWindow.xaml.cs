@@ -42,6 +42,22 @@ namespace DescriptorGenerator.Desktop
 
             processContext.LoadTypes(loaderContext.Assembly);
         }
+
+        private void ShowSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
+
+            settingsWindow.Closed += SettingsWindow_Closed;
+            IsEnabled = false;
+        }
+
+        private void SettingsWindow_Closed(object? sender, EventArgs e)
+        {
+            IsEnabled = true;
+            WindowState = WindowState.Normal;
+            Focus();
+        }
     }
 
     public partial class ProcessAssemblyContext : ObservableObject
@@ -63,11 +79,12 @@ namespace DescriptorGenerator.Desktop
                 return;
 
             isLoading = true;
-            var result = MessageBox.Show($"Are you sure you want to data for {type.FullName}", "Confirmation window", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show($"Are you sure you want to generate data for {type.FullName}", "Confirmation window", MessageBoxButton.OKCancel);
 
             if (result == MessageBoxResult.OK)
             {
-                AssemblyProcessor assemblyProcessor = new AssemblyProcessor(currentAssembly);
+                var config = Config.LoadConfig();
+                AssemblyProcessor assemblyProcessor = new AssemblyProcessor(currentAssembly, config);
 
                 // node window where you can uncheck which items you want to save?
                 var output = assemblyProcessor.ProcessContainer(type);

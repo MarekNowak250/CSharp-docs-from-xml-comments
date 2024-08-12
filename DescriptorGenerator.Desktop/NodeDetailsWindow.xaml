@@ -12,22 +12,23 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
-            <TextBlock Foreground="Black"
+            <TextBlock
                                           FontSize="16">
                                     <Span><Bold>Description: </Bold></Span>
                                      <Run Text="{Binding Description}"/>
             </TextBlock>
-            <TextBlock Foreground="Black"
+            <TextBlock
                                           FontSize="16">
                                    <Span><Bold>Type: </Bold></Span>
                                    <Run Text="{Binding Type}" />
             </TextBlock>
-            <TextBlock Foreground="Black" Text="Properties:" FontWeight="Bold" Margin="0,0,0,8" Grid.Row ="1"
+            <TextBlock Text="Properties:" FontWeight="Bold" Margin="0,0,0,8" Grid.Row ="1"
                                           FontSize="16">
             </TextBlock>
         </StackPanel>
 
-        <ListView ItemsSource="{Binding Properties}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" x:Name="ListViewContainer" Grid.Row="1">
+        <ListView ItemsSource="{Binding Properties}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                  x:Name="ListViewContainer" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,4,0,0">

@@ -62,7 +62,7 @@ namespace DescriptorGenerator.Desktop
         private void Window_Closed(object? sender, EventArgs e)
         {
             IsEnabled = true;
-            WindowState = System.Windows.WindowState.Normal;
+            WindowState = WindowState.Normal;
             Focus();
         }
     }

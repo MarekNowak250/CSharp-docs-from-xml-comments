@@ -9,6 +9,10 @@ namespace DescriptorGenerator.Desktop
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e) => FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata
+        {
+            DefaultValue = Current.FindResource(typeof(Window))
+        });
     }
 
 }

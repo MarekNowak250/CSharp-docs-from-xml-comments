@@ -20,14 +20,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" x:Name="LoadPanel" Margin="16,0">
-            <Label Content="Assembly:" VerticalAlignment="Center" FontSize="14"/>
-           
-            <Label x:Name="assemblyName" VerticalAlignment="Center" FontSize="14" Content="{Binding AssemblyName}"/>
-            <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12, 4" Margin="8,0,0,0" FontSize="14"/>
-        </StackPanel>
+        <UniformGrid Margin="16,0" Rows="1">
+            <StackPanel Orientation="Horizontal" x:Name="LoadPanel">
+                <Label Content="Assembly:" VerticalAlignment="Center" FontSize="14"/>
+
+                <Label x:Name="assemblyName" VerticalAlignment="Center" FontSize="14" Content="{Binding AssemblyName}"/>
+                <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12, 4" Margin="8,0,0,0" FontSize="14"/>
+            </StackPanel>
+            <Button Content="Settings" Padding="16,8" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ShowSettings_Click"></Button>
+        </UniformGrid>
+
         
-        <Border BorderThickness="0,0,0,1" Grid.Row="1" BorderBrush="Black" Height="1"/>
+        <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1" />
         <Grid x:Name="ProcessPanel" Margin="16,0" Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
@@ -42,18 +46,18 @@
                 <Button Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Margin="8,0,0,0" Padding="8,4"/>
             </StackPanel>
 
-            <Border BorderThickness="0,0,0,1" Grid.Row="1" BorderBrush="Black" Height="1"/>
+            <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1"/>
             
-            <ListView x:Name="ListViewTypes" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="2" >
+            <ListView Margin="0,0,0,16" x:Name="ListViewTypes" HorizontalContentAlignment="Stretch" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="2" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1 " Width="{Binding ActualWidth, ElementName =ListViewTypes}">
+                        <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1 ">
                             <Border.InputBindings>
                                 <MouseBinding Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}" MouseAction="LeftDoubleClick"/>
                             </Border.InputBindings>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Name}" Padding="4, 2" FontSize="14" MinWidth="340"/>
-                                <Button Content="Process" Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="Black" Padding="4, 2" FontSize="14" MinWidth="340"/>
+                                <Button Content="Process" Padding="8,4"  Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
                             </StackPanel>
 
                         </Border>
@@ -69,8 +73,11 @@
                                     <Setter.Value>
                                         <ControlTemplate>
                                             <Expander
+                                               Padding="4"
+                                                Margin="4"
                                             Background="Transparent"
-                                            BorderThickness="0"
+                                            BorderThickness="1"
+                                            BorderBrush="Black"
                                             DataContext="{Binding Items}"
                                             Foreground="Transparent"
                                             IsExpanded="False">
