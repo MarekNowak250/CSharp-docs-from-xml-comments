@@ -6,8 +6,8 @@
     <Application.Resources>
         <SolidColorBrush x:Key="BackgroundColor" Color="#0c0f18" />
         <SolidColorBrush x:Key="TextColor" Color="#e6eaf3"/>
-        <SolidColorBrush x:Key="PrimaryColor" Color="#a0aad0"/>
-        <SolidColorBrush x:Key="SecondaryColor" Color="#473367"/>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#473367"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#a0aad0"/>
         <SolidColorBrush x:Key="AccentColor" Color="#956ab6"/>
 
         <Style TargetType="{x:Type Window}">
@@ -23,6 +23,28 @@
             <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColor}"/>
         </Style>
 
+        <Style TargetType="{x:Type ListView}">
+            <Setter Property="Background" Value="{StaticResource ResourceKey=SecondaryColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource ResourceKey=TextColor}"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Expander}">
+                    <Setter Property="Foreground" Value="{StaticResource ResourceKey=TextColor}"/>
+                </Style>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Style.Resources>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <Style TargetType="{x:Type Button}">
             <Style.Resources>
@@ -30,6 +52,16 @@
                     <Setter Property="CornerRadius" Value="4"/>
                 </Style>
             </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ResourceKey=TextColor}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=PrimaryColor}"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="Background" Value="{StaticResource ResourceKey=PrimaryColor}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=TextColor}"/>
             <Setter Property="Template">
@@ -42,7 +74,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}">
                             <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource BackgroundColor}"/>
+                                <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource TextColor}"/>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>

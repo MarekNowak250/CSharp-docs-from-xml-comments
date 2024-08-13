@@ -13,8 +13,9 @@
             <RowDefinition Height="48"/>
             <RowDefinition Height="48"/>
             <RowDefinition Height="48"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="56"/>
+            <RowDefinition Height="72"/>
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Vertical">
@@ -33,7 +34,7 @@
 
         <Grid Grid.Row="2">
             <UniformGrid Rows="1" Columns="2" Margin="16,0" VerticalAlignment="Stretch">
-                <TextBlock Text="Generate same structure as namespace" FontSize="16" VerticalAlignment="Center" />
+                <TextBlock Text="Generate same structure as namespace (not yet)" FontSize="16" VerticalAlignment="Center" />
                 <CheckBox VerticalAlignment="Center" x:Name="CheckBox_NamespaceStructure"/>
             </UniformGrid>
 
@@ -59,6 +60,15 @@
             <Border BorderThickness="0,1,0,0" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <Button Content="Save" Grid.Row="6" Margin="16,8" Click="Save_Click"/>
+        <Grid Grid.Row="5" >
+            <UniformGrid Rows="1" Columns="2" Margin="16,0" VerticalAlignment="Stretch">
+                <TextBlock Text="Include methods (not yet)" FontSize="16" VerticalAlignment="Center" />
+                <CheckBox VerticalAlignment="Center" x:Name="CheckBox_Methods"/>
+            </UniformGrid>
+
+            <Border BorderThickness="0,1,0,0" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Button Content="Save" Grid.Row="7" Margin="8,8" Click="Save_Click"/>
     </Grid>
 </Window>

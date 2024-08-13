@@ -30,7 +30,7 @@
             <Button Content="Settings" Padding="16,8" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ShowSettings_Click"></Button>
         </UniformGrid>
 
-        
+
         <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1" />
         <Grid x:Name="ProcessPanel" Margin="16,0" Grid.Row="2">
             <Grid.RowDefinitions>
@@ -38,30 +38,29 @@
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Search:" VerticalAlignment="Center" FontSize="14"/>
 
-                <TextBox VerticalAlignment="Center" FontSize="14" Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="600"/>
-                <Button Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Margin="8,0,0,0" Padding="8,4"/>
-            </StackPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Left" Content="Search:" VerticalAlignment="Center" FontSize="14"/>
+
+                <Button DockPanel.Dock="Right" Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Padding="16,6"/>
+                <TextBox DockPanel.Dock="Right" Padding="4,4" VerticalAlignment="Center" Margin="8,0" FontSize="14" Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </DockPanel>
 
             <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1"/>
-            
+
             <ListView Margin="0,0,0,16" x:Name="ListViewTypes" HorizontalContentAlignment="Stretch" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="2" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1 ">
+                        <Border BorderThickness="0, 0, 0, 1 " BorderBrush="{StaticResource TextColor}">
                             <Border.InputBindings>
                                 <MouseBinding Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}" MouseAction="LeftDoubleClick"/>
                             </Border.InputBindings>
-                            <StackPanel Orientation="Horizontal" Margin="2">
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="Black" Padding="4, 2" FontSize="14" MinWidth="340"/>
-                                <Button Content="Process" Padding="8,4"  Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
-                            </StackPanel>
-
+                            <UniformGrid Rows="1" Columns="2" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Padding="4, 2" FontSize="14" MinWidth="340"/>
+                                <Button Content="Process" HorizontalAlignment="Right" Padding="8,4" Margin="0,4"  Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
+                            </UniformGrid>
                         </Border>
-
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
@@ -77,7 +76,7 @@
                                                 Margin="4"
                                             Background="Transparent"
                                             BorderThickness="1"
-                                            BorderBrush="Black"
+                                            BorderBrush="{StaticResource TextColor}"
                                             DataContext="{Binding Items}"
                                             Foreground="Transparent"
                                             IsExpanded="False">
@@ -87,7 +86,6 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="16"
                                                         FontWeight="Bold"
-                                                        Foreground="Black"
                                                         Text="{Binding Namespace}" />
                                                     </StackPanel>
                                                 </Expander.Header>
