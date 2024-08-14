@@ -38,22 +38,19 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Foreground="Black"
-                                           FontSize="14">
+                        <TextBlock FontSize="14">
                                              <Span><Bold>Name: </Bold></Span>
                                               <Run Text="{Binding Name, Mode=OneWay}"/>
                         </TextBlock>
-                        <TextBlock Foreground="Black" Grid.Row="1"
-                                                           FontSize="14">
+                        <TextBlock  Grid.Row="1" FontSize="14">
                                                      <Span><Bold>Type: </Bold></Span>
                                                       <Run Text="{Binding Type}"/>
                         </TextBlock>
-                        <TextBlock Foreground="Black" Grid.Row="2"
-                                                           FontSize="14">
+                        <TextBlock  Grid.Row="2" FontSize="14">
                                                         <Span><Bold>Description: </Bold></Span>
                                                       <Run Text="{Binding Description}"/>
                         </TextBlock>
-                        <Border BorderThickness="0,0,0,1"  Margin="0,8,0,0" BorderBrush="Black" Grid.Row="3"></Border>
+                        <Border BorderThickness="0,0,0,1" Margin="0,8,0,0" Grid.Row="3"></Border>
                     </Grid>
                 </DataTemplate>
 

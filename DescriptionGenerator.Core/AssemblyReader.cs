@@ -61,7 +61,7 @@ namespace DescriptionGenerator.Core
             //Console.WriteLine(type.FullName);
 
             var typeSummary = config.IncludeContainersSummary ?  type.GetSummary(): string.Empty;
-            var classContainer = new NodeContainer(type.Name, "class", type.GetSummary());
+            var classContainer = new NodeContainer(type.Name, "class", type.GetSummary(), type.Namespace);
 
             processedElementNames.Add(type.FullName);
 
@@ -185,7 +185,7 @@ namespace DescriptionGenerator.Core
         private NodeContainer[] ProcessEnum(Type type, List<string> processedElementNames = null)
         {
             var enumSummary = config.IncludeContainersSummary ? type.GetSummary() : string.Empty;
-            var enumContainer = new NodeContainer(type.Name, "enum", enumSummary);
+            var enumContainer = new NodeContainer(type.Name, "enum", enumSummary, type.Namespace);
             var containers = new List<NodeContainer>
             {
                 enumContainer
@@ -212,7 +212,11 @@ namespace DescriptionGenerator.Core
         private StructElement GenerateEnumElement(FieldInfo fieldInfo)
         {
             var fieldSummary = config.IncludePropertiesSummary ? fieldInfo.GetSummary() : string.Empty;
-            return new StructElement(fieldInfo.Name, ((int)fieldInfo.GetValue(null)).ToString(), fieldSummary);
+            
+            var fieldValue = fieldInfo.GetValue(null);
+            var fieldRepresentation = fieldValue is int ? ((int)fieldValue).ToString() : fieldValue?.ToString();
+
+            return new StructElement(fieldInfo.Name, fieldRepresentation ?? string.Empty, fieldSummary);
         }
     }
 }

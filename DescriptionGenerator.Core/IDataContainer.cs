@@ -4,7 +4,8 @@
     {
         string Description { get; }
         string Name { get; }
-        string GetType();
+        string Type { get; }
+        string Namespace { get; }
         List<StructElement> Properties { get; }
     }
 }

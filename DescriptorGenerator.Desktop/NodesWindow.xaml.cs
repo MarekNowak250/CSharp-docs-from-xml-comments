@@ -32,20 +32,13 @@ namespace DescriptorGenerator.Desktop
             if (!succeded ?? true)
                 return;
 
+            var config = Config.LoadConfig();
+
             MDPrinter printer = new MDPrinter();
             var nodesToProcess = extendedNodes.Where( x=> x.Selected).ToArray();
 
-            for( int i=0; i< nodesToProcess.Length; i++ )
-            {
-                var node = new NodeContainer(
-                    nodesToProcess[i].Name,
-                    nodesToProcess[i].Type,
-                    nodesToProcess[i].Description,
-                    nodesToProcess[i].Properties);
-
-                var content = printer.Print(node);
-                File.WriteAllText(Path.Combine(dialog.FolderName, $"{node.Name}.MD"), content);
-            }
+            var saver = ISaver.GetSaver(dialog.FolderName, config.NamespaceLikeStructure, printer);
+            saver.Save(nodesToProcess);
 
             MessageBox.Show($"{nodesToProcess.Length} files were created at {dialog.FolderName}", "Files created");
         }

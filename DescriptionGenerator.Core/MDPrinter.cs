@@ -4,14 +4,14 @@
     {
         public string Print(IDataContainer handler)
         {
-            var content = string.Format("# {0} {1}\n", handler.Name, handler.GetType());
+            var content = string.Format("# {0} {1}\n", handler.Name, handler.Type);
             if (!string.IsNullOrWhiteSpace(handler.Description))
             {
                 content += "\n## Description\n";
                 content += string.Format("\n{0}\n", handler.Description);
             }
 
-            if (handler.GetType() == "class")
+            if (handler.Type == "class")
                 return content + PrintClass(handler);
             return content + PrintEnum(handler);
         }
