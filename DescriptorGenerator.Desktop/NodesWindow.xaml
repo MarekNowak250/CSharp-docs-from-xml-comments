@@ -18,7 +18,7 @@
         <ListView x:Name="Test" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1" Padding="6, 4">
+                    <Border BorderBrush="White" BorderThickness="1" Padding="6, 4">
                         <Expander
                             Background="Transparent"
                             BorderThickness="0"
@@ -37,7 +37,6 @@
                                         VerticalAlignment="Center"
                                         FontSize="16"
                                         FontWeight="Bold"
-                                        Foreground="Black"
                                         Text="{Binding Name}" />
                                 </Grid>
                             </Expander.Header>
@@ -48,12 +47,12 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Foreground="Black"
+                                <TextBlock
                                            FontSize="14">
                                      <Span><Bold>Description: </Bold></Span>
                                       <Run Text="{Binding Description}"/>
                                 </TextBlock>
-                                <TextBlock Foreground="Black"
+                                <TextBlock 
                                            FontSize="14" Grid.Row="1">
                                     <Span><Bold>Type: </Bold></Span>
                                     <Run Text="{Binding Type}"/>

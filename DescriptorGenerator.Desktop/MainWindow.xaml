@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DescriptorGenerator.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1280">
     <Window.Resources>
         <CollectionViewSource x:Key="GroupedItems" Source="{Binding Viewers}">
             <CollectionViewSource.GroupDescriptions>
@@ -15,44 +15,39 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="64"/>
             <RowDefinition Height="1"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <UniformGrid Margin="16,0" Rows="1">
-            <StackPanel Orientation="Horizontal" x:Name="LoadPanel">
-                <Label Content="Assembly:" VerticalAlignment="Center" FontSize="14"/>
-
-                <Label x:Name="assemblyName" VerticalAlignment="Center" FontSize="14" Content="{Binding AssemblyName}"/>
-                <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12, 4" Margin="8,0,0,0" FontSize="14"/>
+        <UniformGrid Margin="32,0" Rows="1" >
+            <StackPanel Orientation="Horizontal" x:Name="LoadPanel" VerticalAlignment="Center">
+                <Label Content="Assembly:" FontSize="14"/>
+                <Label x:Name="assemblyName" FontSize="14" Content="{Binding AssemblyName}"/>
+                <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Right" Padding="12, 4" Margin="8,0,0,0" FontSize="14"/>
             </StackPanel>
             <Button Content="Settings" Padding="16,8" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ShowSettings_Click"></Button>
         </UniformGrid>
 
 
         <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1" />
-        <Grid x:Name="ProcessPanel" Margin="16,0" Grid.Row="2">
+        <Grid x:Name="ProcessPanel" Margin="32,16" Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
-                <RowDefinition Height="1"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <DockPanel>
                 <Label DockPanel.Dock="Left" Content="Search:" VerticalAlignment="Center" FontSize="14"/>
-
-                <Button DockPanel.Dock="Right" Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Padding="16,6"/>
-                <TextBox DockPanel.Dock="Right" Padding="4,4" VerticalAlignment="Center" Margin="8,0" FontSize="14" Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
+                <Button DockPanel.Dock="Right" Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Padding="16,8"/>
+                <TextBox DockPanel.Dock="Right" Padding="4,6" VerticalAlignment="Center" Margin="8,0" FontSize="14" Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
 
-            <Border BorderThickness="0,0,0,1" Grid.Row="1" Height="1"/>
 
-            <ListView Margin="0,0,0,16" x:Name="ListViewTypes" HorizontalContentAlignment="Stretch" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="2" >
+            <ListView Margin="0,16" x:Name="ListViewTypes" HorizontalContentAlignment="Stretch" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="1" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0, 0, 0, 1 " BorderBrush="{StaticResource TextColor}">
+                        <Border BorderThickness="0, 0, 0, 1" BorderBrush="{StaticResource TextColor}">
                             <Border.InputBindings>
                                 <MouseBinding Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}" MouseAction="LeftDoubleClick"/>
                             </Border.InputBindings>

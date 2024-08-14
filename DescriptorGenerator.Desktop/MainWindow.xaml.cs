@@ -147,7 +147,7 @@ namespace DescriptorGenerator.Desktop
 
         private bool CanSearch()
         {
-            return !isLoading && (SearchValue?.Length > 3 || SearchValue?.Length == 0);
+            return CanProcess() && (SearchValue?.Length > 3 || SearchValue?.Length == 0);
         }
     }
 

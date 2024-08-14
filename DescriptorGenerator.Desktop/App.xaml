@@ -4,11 +4,13 @@
              xmlns:local="clr-namespace:DescriptorGenerator.Desktop"
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
-        <SolidColorBrush x:Key="BackgroundColor" Color="#0c0f18" />
-        <SolidColorBrush x:Key="TextColor" Color="#e6eaf3"/>
-        <SolidColorBrush x:Key="PrimaryColor" Color="#473367"/>
-        <SolidColorBrush x:Key="SecondaryColor" Color="#a0aad0"/>
-        <SolidColorBrush x:Key="AccentColor" Color="#956ab6"/>
+        <SolidColorBrush x:Key="BackgroundColor" Color="#1A1A1A" />
+        <SolidColorBrush x:Key="BackgroundColor_L1" Color="#2B2B2B" />
+        <SolidColorBrush x:Key="BackgroundColor_L2" Color="#3C3C3C" />
+        <SolidColorBrush x:Key="TextColor" Color="#f1f2f3"/>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#4A4A4A"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#f1f2f3"/>
 
         <Style TargetType="{x:Type Window}">
             <Setter Property="Background" Value="{StaticResource ResourceKey=BackgroundColor}"/>
@@ -17,6 +19,7 @@
         
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{StaticResource ResourceKey=TextColor}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
 
         <Style TargetType="{x:Type Border}">
@@ -26,6 +29,7 @@
         <Style TargetType="{x:Type ListView}">
             <Setter Property="Background" Value="{StaticResource ResourceKey=SecondaryColor}"/>
             <Setter Property="Foreground" Value="{StaticResource ResourceKey=TextColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=PrimaryColor}"/>
             <Style.Resources>
                 <Style TargetType="{x:Type Expander}">
                     <Setter Property="Foreground" Value="{StaticResource ResourceKey=TextColor}"/>
@@ -53,15 +57,16 @@
                 </Style>
             </Style.Resources>
             <Style.Triggers>
+
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.6"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource ResourceKey=TextColor}"/>
-                    <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=PrimaryColor}"/>
+                    <Setter Property="Background" Value="{StaticResource ResourceKey=AccentColor}"/>
                     <Setter Property="Cursor" Value="Hand"/>
                 </Trigger>
             </Style.Triggers>
+            <Setter Property="Foreground" Value="{StaticResource ResourceKey=BackgroundColor_L1}"/>
             <Setter Property="Background" Value="{StaticResource ResourceKey=PrimaryColor}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=TextColor}"/>
             <Setter Property="Template">
@@ -74,7 +79,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}">
                             <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource TextColor}"/>
+                                <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>
