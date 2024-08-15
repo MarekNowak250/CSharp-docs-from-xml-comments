@@ -11,16 +11,18 @@ namespace DescriptorGenerator.Desktop
     /// </summary>
     public partial class NodesWindow : Window
     {
-        List<ExtendedNode> extendedNodes;
+        List<ExtendedNode> _extendedNodes;
+        NamespaceMap _namespaceMap;
+
         public NodesWindow(NodeContainer[] nodes)
         {
             InitializeComponent();
-            extendedNodes = new List<ExtendedNode>();
+            _extendedNodes = new List<ExtendedNode>();
             foreach (var node in nodes) 
             {
-                extendedNodes.Add(new ExtendedNode(node));
+                _extendedNodes.Add(new ExtendedNode(node));
             }
-            Test.ItemsSource = extendedNodes;
+            ListView_Nodes.ItemsSource = _extendedNodes;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -35,9 +37,14 @@ namespace DescriptorGenerator.Desktop
             var config = Config.LoadConfig();
 
             MDPrinter printer = new MDPrinter();
-            var nodesToProcess = extendedNodes.Where( x=> x.Selected).ToArray();
+            var nodesToProcess = _extendedNodes.Where( x=> x.Selected).ToArray();
 
-            var saver = ISaver.GetSaver(dialog.FolderName, config.NamespaceLikeStructure, printer);
+            ISaver saver = null;
+            if(config.NamespaceLikeStructure && _namespaceMap != null)
+                saver = ISaver.GetSaver(dialog.FolderName, _namespaceMap, printer);
+            else
+                saver = ISaver.GetSaver(dialog.FolderName, config.NamespaceLikeStructure, printer);
+
             saver.Save(nodesToProcess);
 
             MessageBox.Show($"{nodesToProcess.Length} files were created at {dialog.FolderName}", "Files created");
@@ -57,6 +64,16 @@ namespace DescriptorGenerator.Desktop
             IsEnabled = true;
             WindowState = WindowState.Normal;
             Focus();
+            if(sender is NamespaceMapWindow namespaceMapWindow)
+                _namespaceMap = namespaceMapWindow.GetNamespaceMap;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var window = new NamespaceMapWindow(_extendedNodes.ToArray(), _namespaceMap ?? new());
+            window.Show();
+            window.Closed += Window_Closed;
+            this.IsEnabled = false;
         }
     }
 }

@@ -4,8 +4,11 @@
     {
         void Save(IList<IDataContainer> nodesToProcess);
 
-        public static ISaver GetSaver(string rootFolderPath, bool saveNamespaceLike, MDPrinter? printer = null) 
-            => saveNamespaceLike ? new NamespaceLikeMDSaver(rootFolderPath, printer) : new SimpleMDSaver(rootFolderPath, printer);
+        public static ISaver GetSaver(string rootFolderPath, bool saveNamespaceLike, MDPrinter? printer = null)
+    => saveNamespaceLike ? new NamespaceLikeMDSaver(rootFolderPath, printer) : new SimpleMDSaver(rootFolderPath, printer);
+
+        public static ISaver GetSaver(string rootFolderPath, NamespaceMap namespaceMap, MDPrinter? printer = null)
+            => new NamespaceLikeMDSaver(rootFolderPath, printer, namespaceMap);
     }
 
     internal class SimpleMDSaver : ISaver
@@ -34,11 +37,13 @@
     {
         private readonly string _rootFolderPath;
         private readonly MDPrinter _printer;
+        private readonly Dictionary<string, string> _namespaceMap;
 
-        public NamespaceLikeMDSaver(string rootFolderPath, MDPrinter printer = null)
+        public NamespaceLikeMDSaver(string rootFolderPath, MDPrinter printer = null, NamespaceMap namespaceMap = null)
         {
             _rootFolderPath = rootFolderPath;
             _printer = printer ?? new MDPrinter();
+            _namespaceMap = namespaceMap?.Value ?? new();
         }
 
         public void Save(IList<IDataContainer> nodesToProcess)
@@ -53,6 +58,8 @@
                 {
                     if(string.IsNullOrEmpty(node.Namespace))
                         folderPath = "";
+                    else if(_namespaceMap.TryGetValue(node.Namespace, out string namespaceMapped))
+                        folderPath = mapNamespaceToPath(namespaceMapped);
                     else
                         folderPath = mapNamespaceToPath(node.Namespace);
 

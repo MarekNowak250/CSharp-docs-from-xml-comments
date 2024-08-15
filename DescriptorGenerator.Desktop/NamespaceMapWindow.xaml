@@ -1,0 +1,30 @@
+﻿<Window x:Class="DescriptorGenerator.Desktop.NamespaceMapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DescriptorGenerator.Desktop"
+        mc:Ignorable="d"
+        Title="Namespace Map" Height="450" Width="800">
+    <StackPanel Orientation="Vertical" Margin="16">
+        <UniformGrid Rows="1" Columns="3" Margin="0,0,0,8">
+            <Button Content="Update map" Padding="8" Command="{Binding UpdateCommand}" Margin="0,0,4,0" Style="{StaticResource MainButton}"/>
+            <Button Content="Save map" Padding="8" Command="{Binding SaveCommand}" Margin="0,0,4,0" Style="{StaticResource MainButton}"/>
+            <Button Content="Load map" Padding="8" Command="{Binding LoadCommand}" Margin="0,0,0,0" Style="{StaticResource MainButton}"/>
+        </UniformGrid>
+
+        <ListView x:Name="ListView_NamespaceMap" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="4,8,4,8">
+                        <UniformGrid Rows="1" Columns="2">
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" FontSize="14"/>
+                            <TextBox Text="{Binding Map, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Padding="4, 2" FontSize="14"/>
+                        </UniformGrid>
+                        <Border BorderBrush="White" BorderThickness="0,0,0,1" Margin="0,8,0,0" Grid.Row="1"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</Window>

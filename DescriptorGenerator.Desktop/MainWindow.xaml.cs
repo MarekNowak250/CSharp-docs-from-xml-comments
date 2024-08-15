@@ -43,7 +43,8 @@ namespace DescriptorGenerator.Desktop
             processContext.LoadTypes(loaderContext.Assembly);
         }
 
-        private void ShowSettings_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        public void ShowSettings()
         {
             var settingsWindow = new SettingsWindow();
             settingsWindow.Show();

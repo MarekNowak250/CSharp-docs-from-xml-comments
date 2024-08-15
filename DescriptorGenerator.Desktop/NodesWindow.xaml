@@ -13,9 +13,12 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Generate MD files: " VerticalAlignment="Center" FontSize="14"></TextBlock>
-            <Button Content="Generate" Padding="8,4" VerticalAlignment="Center" Click="Button_Click"/>
+            <Button Content="Generate" Padding="8,4" VerticalAlignment="Center" Click="Button_Click" Style="{StaticResource MainButton}"/>
+
+            <TextBlock Text="Namespace map: " VerticalAlignment="Center" FontSize="14"></TextBlock>
+            <Button Content="Show" Padding="8,4" VerticalAlignment="Center" Click="Button_Click_2" Style="{StaticResource MainButton}"/>
         </StackPanel>
-        <ListView x:Name="Test" Grid.Row="1" HorizontalContentAlignment="Stretch">
+        <ListView x:Name="ListView_Nodes" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="White" BorderThickness="1" Padding="6, 4">
@@ -57,7 +60,7 @@
                                     <Span><Bold>Type: </Bold></Span>
                                     <Run Text="{Binding Type}"/>
                                 </TextBlock>
-                                <Button Grid.Row="2" Margin="0,8,0,8" Content="Show details" Padding="0,8" Click="Button_Click_1"></Button>
+                                <Button Grid.Row="2" Margin="0,8,0,8" Content="Show details" Style="{StaticResource MainButton}" Padding="0,8" Click="Button_Click_1"></Button>
                             </Grid>
 
                         </Expander>

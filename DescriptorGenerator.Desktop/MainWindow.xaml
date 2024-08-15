@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DescriptorGenerator.Desktop"
+        xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" Height="720" Width="1280" x:Name="Window_MainWindow">
     <Window.Resources>
         <CollectionViewSource x:Key="GroupedItems" Source="{Binding Viewers}">
             <CollectionViewSource.GroupDescriptions>
@@ -22,11 +23,19 @@
 
         <UniformGrid Margin="32,0" Rows="1" >
             <StackPanel Orientation="Horizontal" x:Name="LoadPanel" VerticalAlignment="Center">
-                <Label Content="Assembly:" FontSize="14"/>
-                <Label x:Name="assemblyName" FontSize="14" Content="{Binding AssemblyName}"/>
-                <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Right" Padding="12, 4" Margin="8,0,0,0" FontSize="14"/>
+                <Label Content="Assembly:" FontSize="14" VerticalAlignment="Center"/>
+                <Label x:Name="assemblyName" FontSize="14" Content="{Binding AssemblyName}" VerticalAlignment="Center"/>
+                <materialIcons:MaterialIcon Margin="0,12" ToolTip="Load" Kind="FolderArrowUp" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                    <materialIcons:MaterialIcon.InputBindings>
+                        <MouseBinding Command="{Binding LoadCommand}" MouseAction="LeftClick"/>
+                    </materialIcons:MaterialIcon.InputBindings>
+                </materialIcons:MaterialIcon>
             </StackPanel>
-            <Button Content="Settings" Padding="16,8" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ShowSettings_Click"></Button>
+            <materialIcons:MaterialIcon DataContext="{Binding ElementName=Window_MainWindow}" Margin="0,12" Kind="Cog" ToolTip="Settings" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                <materialIcons:MaterialIcon.InputBindings>
+                    <MouseBinding Command="{Binding ShowSettingsCommand}" MouseAction="LeftClick"/>
+                </materialIcons:MaterialIcon.InputBindings>
+            </materialIcons:MaterialIcon>
         </UniformGrid>
 
 
@@ -39,10 +48,16 @@
 
             <DockPanel>
                 <Label DockPanel.Dock="Left" Content="Search:" VerticalAlignment="Center" FontSize="14"/>
-                <Button DockPanel.Dock="Right" Command="{Binding SearchCommand}" Content="Search" VerticalAlignment="Center" Padding="16,8"/>
+                <Button DockPanel.Dock="Right" Style="{StaticResource IconButton}" 
+                        Command="{Binding SearchCommand}" FontSize="14" 
+                        VerticalAlignment="Center" Margin="0,6" Padding="10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialIcons:MaterialIcon Margin="0,8" Kind="Magnify" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        <TextBlock Margin="4,0,0,0" Text="Search" Foreground="{StaticResource BackgroundColor_L1}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
                 <TextBox DockPanel.Dock="Right" Padding="4,6" VerticalAlignment="Center" Margin="8,0" FontSize="14" Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
-
 
             <ListView Margin="0,16" x:Name="ListViewTypes" HorizontalContentAlignment="Stretch" ItemsSource="{Binding AccessibleTypes}" FontSize="14" Grid.Row="1" >
                 <ListView.ItemTemplate>
@@ -53,7 +68,7 @@
                             </Border.InputBindings>
                             <UniformGrid Rows="1" Columns="2" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Padding="4, 2" FontSize="14" MinWidth="340"/>
-                                <Button Content="Process" HorizontalAlignment="Right" Padding="8,4" Margin="0,4"  Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
+                                <Button Content="Process" HorizontalAlignment="Right"  Padding="8,4" Margin="0,4" Style="{StaticResource MainButton}" Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
                             </UniformGrid>
                         </Border>
                     </DataTemplate>
