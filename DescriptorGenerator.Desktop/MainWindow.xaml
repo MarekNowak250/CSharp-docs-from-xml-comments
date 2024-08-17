@@ -25,13 +25,13 @@
             <StackPanel Orientation="Horizontal" x:Name="LoadPanel" VerticalAlignment="Center">
                 <Label Content="Assembly:" FontSize="14" VerticalAlignment="Center"/>
                 <Label x:Name="assemblyName" FontSize="14" Content="{Binding AssemblyName}" VerticalAlignment="Center"/>
-                <materialIcons:MaterialIcon Margin="0,12" ToolTip="Load" Kind="FolderArrowUp" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                <materialIcons:MaterialIcon Margin="0,16" ToolTip="Load" Kind="FolderArrowUp" VerticalAlignment="Center" HorizontalAlignment="Right" >
                     <materialIcons:MaterialIcon.InputBindings>
                         <MouseBinding Command="{Binding LoadCommand}" MouseAction="LeftClick"/>
                     </materialIcons:MaterialIcon.InputBindings>
                 </materialIcons:MaterialIcon>
             </StackPanel>
-            <materialIcons:MaterialIcon DataContext="{Binding ElementName=Window_MainWindow}" Margin="0,12" Kind="Cog" ToolTip="Settings" VerticalAlignment="Center" HorizontalAlignment="Right" >
+            <materialIcons:MaterialIcon DataContext="{Binding ElementName=Window_MainWindow}" Margin="0, 16" Kind="Cog" ToolTip="Settings" VerticalAlignment="Center" HorizontalAlignment="Right" >
                 <materialIcons:MaterialIcon.InputBindings>
                     <MouseBinding Command="{Binding ShowSettingsCommand}" MouseAction="LeftClick"/>
                 </materialIcons:MaterialIcon.InputBindings>
@@ -52,7 +52,7 @@
                         Command="{Binding SearchCommand}" FontSize="14" 
                         VerticalAlignment="Center" Margin="0,6" Padding="10,0">
                     <StackPanel Orientation="Horizontal">
-                        <materialIcons:MaterialIcon Margin="0,8" Kind="Magnify" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        <materialIcons:MaterialIcon Margin="0,8" Kind="Magnify" Foreground="{StaticResource BackgroundColor_L1}" VerticalAlignment="Center" HorizontalAlignment="Right" />
                         <TextBlock Margin="4,0,0,0" Text="Search" Foreground="{StaticResource BackgroundColor_L1}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
@@ -68,7 +68,12 @@
                             </Border.InputBindings>
                             <UniformGrid Rows="1" Columns="2" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Padding="4, 2" FontSize="14" MinWidth="340"/>
-                                <Button Content="Process" HorizontalAlignment="Right"  Padding="8,4" Margin="0,4" Style="{StaticResource MainButton}" Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}"/>
+                                <Button HorizontalAlignment="Right"  Padding="8,4" Margin="0,4" Style="{StaticResource IconButton}" Command="{Binding DataContext.ProcessCommand, ElementName=ProcessPanel}" CommandParameter="{Binding .}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialIcons:MaterialIcon Kind="BookArrowRight" Foreground="{StaticResource BackgroundColor_L1}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock Margin="4,0,0,0" Text="Process" Foreground="{StaticResource BackgroundColor_L1}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </UniformGrid>
                         </Border>
                     </DataTemplate>
