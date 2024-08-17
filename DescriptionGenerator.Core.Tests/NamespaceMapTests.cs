@@ -71,6 +71,7 @@ namespace DescriptionGenerator.Core.Tests
         [InlineData("namespace", "new_namespace", "namespace.folder.type", "new_namespace.folder.type")]
         [InlineData("namespace", "new_namespace", "not_namespace.folder.type", "not_namespace.folder.type")]
         [InlineData("namespace.folder.type", "new_namespace.folder.type", "namespace", "namespace")]
+        [InlineData("namespace.folder", "new_namespace_folder", "namespace.folder.type", "new_namespace_folder.type")]
         public void SetValue_ShouldOverrideUpdateAllValues_WhenNewValueIsAPartOfTheirNamespace(string partValue, string newPartValue, string itemValue, string newItemValue)
         {
             var namespaceMap = new NamespaceMap();
