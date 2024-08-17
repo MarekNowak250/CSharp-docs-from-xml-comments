@@ -24,7 +24,7 @@ namespace DescriptionGenerator
                 Console.WriteLine("\nPlease provide method full name (namespace.name)!\n");
                 return;
             }
-            var methodus = new AssemblyProcessor(ass);
+            var methodus = new AssemblyProcessor(ass, null);
             var classes = methodus.ProcessClass(methodName);
 
             foreach (var clazz in classes)

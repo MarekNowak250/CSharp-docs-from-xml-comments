@@ -1,4 +1,5 @@
-﻿using DescriptionGenerator.Core;
+﻿using DescriptionGenerator;
+using DescriptionGenerator.Core;
 
 Console.WriteLine("Enter how you want to generate MD!\n1: by text\n2: by assembly\n3: exit");
 var type = Console.ReadLine();

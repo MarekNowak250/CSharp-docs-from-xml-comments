@@ -1,4 +1,6 @@
-﻿namespace DescriptionGenerator
+﻿using DescriptionGenerator.Core;
+
+namespace DescriptionGenerator
 {
     public class MDGeneratorByText
     {
@@ -63,6 +65,10 @@
             public string Description { get; protected set; }
             public string Name { get; protected set; }
             public List<StructElement> Properties { get; protected set; }
+
+            public string Type => GetType();
+
+            public string Namespace => "";
 
             public abstract string GetType();
 

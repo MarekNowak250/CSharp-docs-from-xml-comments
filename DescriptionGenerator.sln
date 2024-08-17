@@ -5,9 +5,13 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DescriptionGenerator.Console", "DescriptionGenerator\DescriptionGenerator.Console.csproj", "{44E2D625-4EB2-454A-A4C3-A8777ACE5F44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DescriptionGenerator.Core", "DescriptionGenerator.Core\DescriptionGenerator.Core.csproj", "{2FA9A480-CDE1-4DEF-A91E-8E63CB8AED16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DescriptionGenerator.Core", "DescriptionGenerator.Core\DescriptionGenerator.Core.csproj", "{2FA9A480-CDE1-4DEF-A91E-8E63CB8AED16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DescriptorGenerator.Desktop", "DescriptorGenerator.Desktop\DescriptorGenerator.Desktop.csproj", "{33513138-DF6D-4166-8223-9BACF51D9860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DescriptorGenerator.Desktop", "DescriptorGenerator.Desktop\DescriptorGenerator.Desktop.csproj", "{33513138-DF6D-4166-8223-9BACF51D9860}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{519052BE-E103-40D8-9F16-E36E89E0379B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DescriptionGenerator.Core.Tests", "DescriptionGenerator.Core.Tests\DescriptionGenerator.Core.Tests.csproj", "{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{33513138-DF6D-4166-8223-9BACF51D9860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33513138-DF6D-4166-8223-9BACF51D9860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33513138-DF6D-4166-8223-9BACF51D9860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6EC4C4E-628C-40C9-AA3F-13C04A28CA51} = {519052BE-E103-40D8-9F16-E36E89E0379B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95E409A5-3E3C-485F-8C9F-57977DAF2FC4}
