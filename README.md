@@ -4,7 +4,28 @@
 
 The program enables the generation of Markdown documentation by utilizing a supplied DLL. It analyzes the chosen class and its related components (such as other classes, types, enums), and produces Markdown files for each of them, incorporating XML comments from the code (e.g summaries).
 
-![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/5584cca66d245fc0be37114bfa240688/image.png)
+## Simple to use
+
+1. Just select DLL
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/58966bbc650218d8bcb3a9e8511ceb37/image.png){width=800}
+
+2. Choose class
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/1e5fa8454163b9a84d83ddf9e4c9f305/image.png){width=800}
+
+3. Select items from which files are supposed to be generated
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/989317aa2d1310f3da52899ce1283a3b/image.png){width=800}
+
+## Highly customizable
+
+The application is highly customizable, allowing to disable namespace-like generation if you prefer a flat structure (all files in one folder), disable generation of files for nested dependencies (related classes/enums), and exclude summaries of properties/containers from generated files.
+
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/42f98fa54c0a72f3760e30295d959b27/image.png){width=800}
+
+## Custom structure
+
+There is an option to set a custom output structure, allowing alter namespaces that will be presented later as folders.
+
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/00a04d5192f79d2f3d05161ddb783802/image.png){width=707 height=396}
 
 ## Why?
 
