@@ -18,6 +18,10 @@ The program enables the generation of Markdown documentation by utilizing a supp
 
 ![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/989317aa2d1310f3da52899ce1283a3b/image.png){width=800}
 
+4. Generate 
+
+![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/9b78c1eb0728a6faf0142454778d33bb/image.png){width=800}
+
 ## Highly customizable
 
 The application is highly customizable, allowing to disable namespace-like generation if you prefer a flat structure (all files in one folder), disable generation of files for nested dependencies (related classes/enums), and exclude summaries of properties/containers from generated files.
