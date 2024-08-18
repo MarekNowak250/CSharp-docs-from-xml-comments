@@ -7,12 +7,15 @@ The program enables the generation of Markdown documentation by utilizing a supp
 ## Simple to use
 
 1. Just select DLL
+
 ![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/58966bbc650218d8bcb3a9e8511ceb37/image.png){width=800}
 
 2. Choose class
+
 ![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/1e5fa8454163b9a84d83ddf9e4c9f305/image.png){width=800}
 
 3. Select items from which files are supposed to be generated
+
 ![image](https://gitlab.com/Phoenix510/csharp-docs-from-xml-comments/-/wikis/uploads/989317aa2d1310f3da52899ce1283a3b/image.png){width=800}
 
 ## Highly customizable
