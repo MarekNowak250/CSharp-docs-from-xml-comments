@@ -1,4 +1,6 @@
-﻿namespace DescriptionGenerator.Core
+﻿using System.Diagnostics;
+
+namespace DescriptionGenerator.Core
 {
     public interface ISaver
     {
@@ -66,11 +68,14 @@
                     namespacePathMap[node.Namespace] = folderPath;
                 }
 
-                var content = _printer.Print(node);
-                
                 folderPath = Path.Combine(_rootFolderPath, folderPath);
                 Directory.CreateDirectory(folderPath);
                 
+                node.Namespace = folderPath;
+                var linker = new Linker(nodesToProcess);
+                linker.LinkDependencies(node);
+                var content = _printer.Print(node);
+
                 File.WriteAllText(Path.Combine(folderPath, $"{node.Name}.MD"), content);
             }
         }
@@ -78,6 +83,32 @@
         private string mapNamespaceToPath(string nodeNamespace)
         {
             return nodeNamespace.Replace(".", "/");
+        }
+    }
+
+    internal class Linker
+    {
+        private readonly IEnumerable<IDataContainer> dataContainers;
+
+        public Linker(IEnumerable<IDataContainer> dataContainers)
+        {
+            this.dataContainers = dataContainers;
+        }
+
+        public void LinkDependencies(IDataContainer dataContainer)
+        {
+            foreach(var prop in dataContainer.Properties)
+            {
+                var corespondingNode = dataContainers.SingleOrDefault(x => x.Name == prop.Type);
+                if (corespondingNode is null)
+                    continue;
+
+                Uri baseUri = new Uri(corespondingNode.Namespace);
+                Uri dependencyUri = new Uri(dataContainer.Namespace);
+                Uri relativeUri = baseUri.MakeRelativeUri(dependencyUri);
+
+                prop.Type = $"[{prop.Type}]({relativeUri.ToString()}/{prop.Type}.MD)";
+            }
         }
     }
 }
