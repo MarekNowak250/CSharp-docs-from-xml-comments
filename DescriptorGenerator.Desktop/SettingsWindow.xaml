@@ -70,6 +70,16 @@
             <Border BorderThickness="0,1,0,0" VerticalAlignment="Bottom"/>
         </Grid>
 
+        <Grid Grid.Row="6">
+            <UniformGrid Rows="1" Columns="2" Margin="16,0" VerticalAlignment="Stretch">
+                <TextBlock Text="Generate links to dependencies (requires nested dependencies and folder like structure to work)" FontSize="16" VerticalAlignment="Center"/>
+                <CheckBox VerticalAlignment="Center" x:Name="CheckBox_Links"/>
+            </UniformGrid>
+
+            <Border BorderThickness="0,1,0,0" VerticalAlignment="Bottom"/>
+        </Grid>
+
+
         <Button Content="Save" Grid.Row="7" Margin="8,8" Click="Save_Click" Style="{StaticResource MainButton}"/>
     </Grid>
 </Window>

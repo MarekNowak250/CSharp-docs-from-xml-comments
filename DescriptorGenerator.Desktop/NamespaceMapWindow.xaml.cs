@@ -43,7 +43,7 @@ namespace DescriptorGenerator.Desktop
 
     internal partial class NamespaceMapContext
     {
-        public ObservableCollection<NamespaceMapItem> NamespaceMapItems { get; private set;}
+        public ObservableCollection<NamespaceMapItem> NamespaceMapItems { get; private set; }
         NamespaceMap _map;
 
         public NamespaceMapContext(IDataContainer[] nodes, NamespaceMap currentMap)
@@ -51,8 +51,8 @@ namespace DescriptorGenerator.Desktop
             NamespaceMapItems = new();
             _map = new NamespaceMap();
             _map.Generate(nodes);
-            
-            foreach(var item in currentMap.Value)
+
+            foreach (var item in currentMap.Value)
             {
                 _map.SetValue(item.Key, item.Value);
             }
@@ -73,15 +73,10 @@ namespace DescriptorGenerator.Desktop
         }
 
         [RelayCommand]
-        public void Update()
+        public void UpdateItem(NamespaceMapItem source)
         {
-            foreach(var source in NamespaceMapItems)
-            {
-                _map.SetValue(source.Name, source.Map);
-            }
+            _map.SetValue(source.Name, source.Map);
             Generate();
-
-            MessageBox.Show("Namespace map updated.");
         }
 
         [RelayCommand]
@@ -96,12 +91,11 @@ namespace DescriptorGenerator.Desktop
             if (!succeded ?? true)
                 return;
 
-            Update();
             File.WriteAllText(dialog.FileName, JsonConvert.SerializeObject(_map?.Value));
         }
 
         [RelayCommand]
-        public void Load() 
+        public void Load()
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "node map files|*.node_map";

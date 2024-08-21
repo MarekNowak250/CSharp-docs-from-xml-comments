@@ -72,11 +72,15 @@ namespace DescriptionGenerator.Core
                 Directory.CreateDirectory(folderPath);
                 
                 node.Namespace = folderPath;
+            }
+
+            foreach(var node in nodesToProcess)
+            {
                 var linker = new Linker(nodesToProcess);
                 linker.LinkDependencies(node);
                 var content = _printer.Print(node);
 
-                File.WriteAllText(Path.Combine(folderPath, $"{node.Name}.MD"), content);
+                File.WriteAllText(Path.Combine(node.Namespace, $"{node.Name}.MD"), content);
             }
         }
 
@@ -103,11 +107,12 @@ namespace DescriptionGenerator.Core
                 if (corespondingNode is null)
                     continue;
 
-                Uri baseUri = new Uri(corespondingNode.Namespace);
-                Uri dependencyUri = new Uri(dataContainer.Namespace);
+                Uri baseUri = new Uri(dataContainer.Namespace);
+                Uri dependencyUri = new Uri(corespondingNode.Namespace);
                 Uri relativeUri = baseUri.MakeRelativeUri(dependencyUri);
 
-                prop.Type = $"[{prop.Type}]({relativeUri.ToString()}/{prop.Type}.MD)";
+                // not sure why it's always one level too deep
+                prop.Type = $"[{prop.Type}](../{relativeUri.ToString()}/{prop.Type}.MD)";
             }
         }
     }
