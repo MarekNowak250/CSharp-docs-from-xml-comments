@@ -9,6 +9,7 @@ namespace DescriptionGenerator.Core
         public bool NamespaceLikeStructure { get; set; } = false;
         public bool IncludePropertiesSummary { get; set; } = true;
         public bool IncludeContainersSummary { get; set; } = true;
+        public bool GenerateLinks { get; set; } = true;
 
         public static Config LoadConfig(string path = null)
         {

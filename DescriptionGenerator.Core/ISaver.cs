@@ -6,11 +6,11 @@ namespace DescriptionGenerator.Core
     {
         void Save(IList<IDataContainer> nodesToProcess);
 
-        public static ISaver GetSaver(string rootFolderPath, bool saveNamespaceLike, MDPrinter? printer = null)
-    => saveNamespaceLike ? new NamespaceLikeMDSaver(rootFolderPath, printer) : new SimpleMDSaver(rootFolderPath, printer);
+        public static ISaver GetSaver(string rootFolderPath, bool saveNamespaceLike, bool generateLinks, MDPrinter? printer = null)
+    => saveNamespaceLike ? new NamespaceLikeMDSaver(rootFolderPath, false, printer) : new SimpleMDSaver(rootFolderPath, printer);
 
-        public static ISaver GetSaver(string rootFolderPath, NamespaceMap namespaceMap, MDPrinter? printer = null)
-            => new NamespaceLikeMDSaver(rootFolderPath, printer, namespaceMap);
+        public static ISaver GetSaver(string rootFolderPath, NamespaceMap namespaceMap, bool generateLinks, MDPrinter? printer = null)
+            => new NamespaceLikeMDSaver(rootFolderPath, generateLinks, printer, namespaceMap);
     }
 
     internal class SimpleMDSaver : ISaver
@@ -38,12 +38,14 @@ namespace DescriptionGenerator.Core
     internal class NamespaceLikeMDSaver : ISaver
     {
         private readonly string _rootFolderPath;
+        private readonly bool _generateLinks;
         private readonly MDPrinter _printer;
         private readonly Dictionary<string, string> _namespaceMap;
 
-        public NamespaceLikeMDSaver(string rootFolderPath, MDPrinter printer = null, NamespaceMap namespaceMap = null)
+        public NamespaceLikeMDSaver(string rootFolderPath, bool generateLinks, MDPrinter printer = null, NamespaceMap namespaceMap = null)
         {
             _rootFolderPath = rootFolderPath;
+            _generateLinks = generateLinks;
             _printer = printer ?? new MDPrinter();
             _namespaceMap = namespaceMap?.Value ?? new();
         }
@@ -76,8 +78,12 @@ namespace DescriptionGenerator.Core
 
             foreach(var node in nodesToProcess)
             {
-                var linker = new Linker(nodesToProcess);
-                linker.LinkDependencies(node);
+                if (_generateLinks)
+                {
+                    var linker = new Linker(nodesToProcess);
+                    linker.LinkDependencies(node);
+                }
+
                 var content = _printer.Print(node);
 
                 File.WriteAllText(Path.Combine(node.Namespace, $"{node.Name}.MD"), content);

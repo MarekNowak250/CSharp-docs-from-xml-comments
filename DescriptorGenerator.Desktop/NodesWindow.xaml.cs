@@ -41,9 +41,9 @@ namespace DescriptorGenerator.Desktop
 
             ISaver saver = null;
             if(config.NamespaceLikeStructure && _namespaceMap != null)
-                saver = ISaver.GetSaver(dialog.FolderName, _namespaceMap, printer);
+                saver = ISaver.GetSaver(dialog.FolderName, _namespaceMap, config.GenerateLinks, printer);
             else
-                saver = ISaver.GetSaver(dialog.FolderName, config.NamespaceLikeStructure, printer);
+                saver = ISaver.GetSaver(dialog.FolderName, config.NamespaceLikeStructure, config.GenerateLinks, printer);
 
             saver.Save(nodesToProcess);
 

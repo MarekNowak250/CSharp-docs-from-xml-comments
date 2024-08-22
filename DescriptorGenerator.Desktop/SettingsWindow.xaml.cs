@@ -29,6 +29,7 @@ namespace DescriptorGenerator.Desktop
             CheckBox_ContainersSummary.IsChecked = configuration.IncludeContainersSummary;
             CheckBox_NamespaceStructure.IsChecked = configuration.NamespaceLikeStructure;
             CheckBox_NestedDependencies.IsChecked = configuration.IncludeNested;
+            CheckBox_GenerateLinks.IsChecked = configuration.GenerateLinks;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -39,6 +40,7 @@ namespace DescriptorGenerator.Desktop
                 IncludeContainersSummary = CheckBox_ContainersSummary.IsChecked ?? true,
                 NamespaceLikeStructure = CheckBox_NamespaceStructure.IsChecked ?? false,
                 IncludeNested = CheckBox_NestedDependencies.IsChecked ?? true,
+                GenerateLinks = CheckBox_GenerateLinks.IsChecked ?? true,
             }.SaveConfig();
 
             MessageBox.Show("Configuration has been saved", "Configuration saved");
