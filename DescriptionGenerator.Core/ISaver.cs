@@ -30,7 +30,7 @@ namespace DescriptionGenerator.Core
             {
                 var node = nodesToProcess[i];
                 var content = _printer.Print(node);
-                File.WriteAllText(Path.Combine(_rootFolderPath, $"{node.Name}.MD"), content);
+                File.WriteAllText(Path.Combine(_rootFolderPath, $"{node.Name}.md"), content);
             }
         }
     }
@@ -80,13 +80,13 @@ namespace DescriptionGenerator.Core
             {
                 if (_generateLinks)
                 {
-                    var linker = new Linker(nodesToProcess);
+                    var linker = new Linker(nodesToProcess, _rootFolderPath);
                     linker.LinkDependencies(node);
                 }
 
                 var content = _printer.Print(node);
 
-                File.WriteAllText(Path.Combine(node.Namespace, $"{node.Name}.MD"), content);
+                File.WriteAllText(Path.Combine(node.Namespace, $"{node.Name}.md"), content);
             }
         }
 
@@ -98,27 +98,38 @@ namespace DescriptionGenerator.Core
 
     internal class Linker
     {
-        private readonly IEnumerable<IDataContainer> dataContainers;
+        private readonly IEnumerable<IDataContainer> _dataContainers;
+        private readonly string _rootFolderPath;
 
-        public Linker(IEnumerable<IDataContainer> dataContainers)
+        public Linker(IEnumerable<IDataContainer> dataContainers, string rootFolderPath)
         {
-            this.dataContainers = dataContainers;
+            this._dataContainers = dataContainers;
+            this._rootFolderPath = rootFolderPath;
         }
 
         public void LinkDependencies(IDataContainer dataContainer)
         {
-            foreach(var prop in dataContainer.Properties)
+            var allFilesInRoot = Directory.GetFileSystemEntries(_rootFolderPath, "*.md", SearchOption.AllDirectories);
+            foreach (var prop in dataContainer.Properties)
             {
-                var corespondingNode = dataContainers.SingleOrDefault(x => x.Name == prop.Type);
+                var corespondingNode = _dataContainers.SingleOrDefault(x => x.Name == prop.Type);
+                var corespondingPath = corespondingNode?.Namespace;
+
                 if (corespondingNode is null)
-                    continue;
+                {
+                     corespondingPath = allFilesInRoot.FirstOrDefault( fn => 
+                        Path.GetFileNameWithoutExtension(fn).Equals(prop.Name));
+
+                    if (string.IsNullOrEmpty(corespondingPath))
+                        continue;
+                }
 
                 Uri baseUri = new Uri(dataContainer.Namespace);
-                Uri dependencyUri = new Uri(corespondingNode.Namespace);
+                Uri dependencyUri = new Uri(corespondingPath);
                 Uri relativeUri = baseUri.MakeRelativeUri(dependencyUri);
 
                 // not sure why it's always one level too deep
-                prop.Type = $"[{prop.Type}](../{relativeUri.ToString()}/{prop.Type}.MD)";
+                prop.Type = $"[{prop.Type}](../{relativeUri.ToString()}/{prop.Type}.md)";
             }
         }
     }

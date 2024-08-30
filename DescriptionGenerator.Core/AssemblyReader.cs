@@ -212,9 +212,16 @@ namespace DescriptionGenerator.Core
         private StructElement GenerateEnumElement(FieldInfo fieldInfo)
         {
             var fieldSummary = config.IncludePropertiesSummary ? fieldInfo.GetSummary() : string.Empty;
-            
-            var fieldValue = fieldInfo.GetValue(null);
-            var fieldRepresentation = fieldValue is int ? ((int)fieldValue).ToString() : fieldValue?.ToString();
+            var fieldRepresentation = "";
+            try
+            {
+                var fieldValue = (int)fieldInfo.GetValue(null);
+                fieldRepresentation = fieldValue.ToString();
+            }
+            catch
+            {
+                fieldRepresentation = fieldInfo.GetValue(null).ToString();
+            }
 
             return new StructElement(fieldInfo.Name, fieldRepresentation ?? string.Empty, fieldSummary);
         }
