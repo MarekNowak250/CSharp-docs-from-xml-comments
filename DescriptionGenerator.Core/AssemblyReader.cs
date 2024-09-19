@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Newtonsoft.Json;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace DescriptionGenerator.Core
 {
@@ -38,7 +40,7 @@ namespace DescriptionGenerator.Core
         {
             if (processedElementNames == null)
                 processedElementNames = new List<string>();
-            else if (processedElementNames.Contains(type.FullName) 
+            else if (processedElementNames.Contains(type.FullName)
                 || (!config.IncludeNested && processedElementNames.Count > 0))
                 return new NodeContainer[] { };
 
@@ -53,14 +55,14 @@ namespace DescriptionGenerator.Core
 
         private NodeContainer[] ProcessClass(Type type, List<string> processedElementNames = null)
         {
-            if(type == null 
-                || (!type.IsClass && !type.IsInterface && !type.IsEnum) 
-                || type.Name.StartsWith('<') 
+            if (type == null
+                || (!type.IsClass && !type.IsInterface && !type.IsEnum)
+                || type.Name.StartsWith('<')
                 || type.Namespace.StartsWith("System"))
                 return new NodeContainer[0];
             //Console.WriteLine(type.FullName);
 
-            var typeSummary = config.IncludeContainersSummary ?  type.GetSummary(): string.Empty;
+            var typeSummary = config.IncludeContainersSummary ? type.GetSummary() : string.Empty;
             var classContainer = new NodeContainer(type.Name, "class", type.GetSummary(), type.Namespace);
 
             processedElementNames.Add(type.FullName);
@@ -182,6 +184,31 @@ namespace DescriptionGenerator.Core
             }
         }
 
+        private NodeContainer[] ProcessMethods(Type baseType, StructElement currentElement, List<string> processedElementNames)
+        {
+            var methods = baseType.GetMethods(BindingFlags.Public);
+            int count = 0;
+
+
+            foreach(var method in methods)
+            {
+                var summary = method.GetSummary();
+                var name = method.Name;
+
+                var returnType = method.ReturnType;
+                var parameters = method.GetParameters();
+
+                foreach(var param in parameters)
+                {
+                    var structElement = GenerateParameterElement(param);
+                }
+
+                var methodStruct = new MethodContainer(name, summary, arguments: null, returnType, null, null);
+            }
+
+            return null;
+        }
+
         private NodeContainer[] ProcessEnum(Type type, List<string> processedElementNames = null)
         {
             var enumSummary = config.IncludeContainersSummary ? type.GetSummary() : string.Empty;
@@ -203,11 +230,19 @@ namespace DescriptionGenerator.Core
             return new NodeContainer[] { enumContainer };
         }
 
+
         private StructElement GeneratePropertyElement(PropertyInfo propertyInfo)
         {
             var propertySummary = config.IncludePropertiesSummary ? propertyInfo.GetSummary() : string.Empty;
             return new StructElement(propertyInfo.Name, propertyInfo.PropertyType.Name, propertySummary);
         }
+
+        private StructElement GenerateParameterElement(ParameterInfo propertyInfo)
+        {
+            var propertySummary = string.Empty;
+            return new StructElement(propertyInfo.Name, propertyInfo.ParameterType.Name, propertySummary);
+        }
+
 
         private StructElement GenerateEnumElement(FieldInfo fieldInfo)
         {
@@ -224,6 +259,65 @@ namespace DescriptionGenerator.Core
             }
 
             return new StructElement(fieldInfo.Name, fieldRepresentation ?? string.Empty, fieldSummary);
+        }
+    }
+
+    public class MethodContainer : StructElement
+    {
+        private readonly List<(string name, Type type)> arguments;
+        private readonly Type output;
+        public readonly List<StructElement> ArgumentsElements;
+        public readonly StructElement OutputElement;
+
+        public MethodContainer(string name,
+                               string description,
+                               List<(string, Type)> arguments,
+                               Type output, 
+                               List<StructElement> argumentsElements,
+                               StructElement outputElement) : base(name, type: "method", description)
+        {
+            this.arguments = arguments ?? new();
+            this.output = output;
+            ArgumentsElements = argumentsElements;
+            OutputElement = outputElement;
+        }
+
+        public string GetOutputJson()
+        {
+            if (output == typeof(string))
+                return "";
+
+            var outputObject = RuntimeHelpers.GetUninitializedObject(output);
+            return JsonConvert.SerializeObject(outputObject);
+        }
+
+        public string GetInputJson()
+        {
+            string[] output = new string[arguments.Count];
+            for (int i = 0; i < arguments.Count; i++)
+            {
+                var type = arguments[i].type;
+                var defaultValue = type.IsValueType
+                   ? RuntimeHelpers.GetUninitializedObject(type)
+                   : "null";
+                if (type == typeof(string))
+                    defaultValue = "";
+
+                output[i] = $"\"{arguments[i].name}\": {defaultValue}";
+            }
+
+            return "{" + string.Join($",{Environment.NewLine}", output) + "}";
+        }
+
+        public override IPrinter GetPrinter(PrinterType printerType)
+        {
+            switch (printerType)
+            {
+                case PrinterType.Markdown:
+                    return new MDMethodPrinter(this);
+                default:
+                    throw new NotImplementedException($"Type {printerType} is not supported for method element");
+            }
         }
     }
 }

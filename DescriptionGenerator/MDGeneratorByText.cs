@@ -68,7 +68,7 @@ namespace DescriptionGenerator
 
             public string Type => GetType();
 
-            public string Namespace => "";
+            public string Namespace { get; set; }
 
             public abstract string GetType();
 
