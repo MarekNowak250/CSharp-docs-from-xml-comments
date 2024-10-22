@@ -5,6 +5,7 @@ namespace DescriptorGenerator.Desktop
 {
     public partial class ExtendedNode : ObservableObject, IDataContainer
     {
+        private readonly NodeContainer nodeContainer;
         [ObservableProperty]
         private bool selected;
 
@@ -16,6 +17,7 @@ namespace DescriptorGenerator.Desktop
             Properties = nodeContainer.Properties;
             Namespace = nodeContainer.Namespace;
             Selected = true;
+            this.nodeContainer = nodeContainer;
         }
 
         public string Name { get; }
@@ -24,5 +26,10 @@ namespace DescriptorGenerator.Desktop
         public string Namespace { get; set; }
 
         public List<StructElement> Properties { get; set; }
+
+        public IPrinter GetPrinter(PrinterType printerType)
+        {
+            return nodeContainer.GetPrinter(printerType);
+        }
     }
 }

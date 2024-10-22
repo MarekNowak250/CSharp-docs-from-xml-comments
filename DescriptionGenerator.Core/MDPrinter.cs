@@ -152,8 +152,9 @@ namespace DescriptionGenerator.Core
             content += string.Format("\n| Parameter | Description | Type |");
             content += string.Format("\n| :- | :- | :- |\n");
             if(groupedProps.TryGetValue("props", out var props))
-            content += string.Format("{0}", string.Join("\n", props.Select(x => x.GetPrinter(PrinterType.Markdown).Print() )));
-
+                content += string.Format("{0}", string.Join("\n", props.Select(x => x.GetPrinter(PrinterType.Markdown).Print() )));
+            if (groupedProps.TryGetValue("methods", out var methods))
+                content += string.Format("{0}", string.Join("\n", methods.Select(x => x.GetPrinter(PrinterType.Markdown).Print())));
             return content;
         }
 
@@ -175,7 +176,7 @@ namespace DescriptionGenerator.Core
 
     public class MDPrinter
     {
-        public string Print(StructElement handler)
+        public string Print(IDataContainer handler)
         {
             var printer = handler.GetPrinter(PrinterType.Markdown);
             return printer.Print();

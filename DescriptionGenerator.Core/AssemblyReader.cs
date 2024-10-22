@@ -74,6 +74,8 @@ namespace DescriptionGenerator.Core
             containers.Add(classContainer);
             classContainer.Properties.AddRange(result.properties);
 
+            var methods = ProcessMethods(type);
+            classContainer.Properties.AddRange(methods);
 
             return containers.ToArray();
         }
@@ -184,11 +186,12 @@ namespace DescriptionGenerator.Core
             }
         }
 
-        private NodeContainer[] ProcessMethods(Type baseType, StructElement currentElement, List<string> processedElementNames)
+        private MethodContainer[] ProcessMethods(Type baseType)
         {
-            var methods = baseType.GetMethods(BindingFlags.Public);
+            var methods = baseType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+    .Where(c => (c.IsPublic || c.IsFamily) && !c.IsSpecialName).ToArray();
             int count = 0;
-
+            var methodsContainers = new MethodContainer[methods.Length];
 
             foreach(var method in methods)
             {
@@ -197,16 +200,21 @@ namespace DescriptionGenerator.Core
 
                 var returnType = method.ReturnType;
                 var parameters = method.GetParameters();
+                var argElements = new List<StructElement>();
+                var arguments = new List<(string, Type)>();
 
-                foreach(var param in parameters)
+                foreach (var param in parameters)
                 {
                     var structElement = GenerateParameterElement(param);
+                    argElements.Add(structElement);
+                    arguments.Add((param.Name, param.GetType()));
                 }
 
-                var methodStruct = new MethodContainer(name, summary, arguments: null, returnType, null, null);
+                var methodStruct = new MethodContainer(name, summary, arguments: arguments, returnType, argElements, new StructElement("output", returnType.Name, ""));
+                methodsContainers[count++] = methodStruct;
             }
 
-            return null;
+            return methodsContainers;
         }
 
         private NodeContainer[] ProcessEnum(Type type, List<string> processedElementNames = null)
@@ -284,7 +292,7 @@ namespace DescriptionGenerator.Core
 
         public string GetOutputJson()
         {
-            if (output == typeof(string))
+            if (output == typeof(string) || output == typeof(void) || output.IsAbstract)
                 return "";
 
             var outputObject = RuntimeHelpers.GetUninitializedObject(output);

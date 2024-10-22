@@ -7,5 +7,6 @@
         string Type { get; }
         string Namespace { get; set;  }
         List<StructElement> Properties { get; }
+        IPrinter GetPrinter(PrinterType printerType);
     }
 }
