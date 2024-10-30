@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DescriptionGenerator.Core;
+using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Types;
 
 namespace DescriptorGenerator.Desktop
 {

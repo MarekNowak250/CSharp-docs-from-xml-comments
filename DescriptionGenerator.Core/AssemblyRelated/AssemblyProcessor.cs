@@ -1,24 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using DescriptionGenerator.Core.Types;
 
-namespace DescriptionGenerator.Core
+namespace DescriptionGenerator.Core.AssemblyRelated
 {
-    public class AssemblyReader
-    {
-        private readonly string assemblyPath;
-
-        public AssemblyReader(string assemblyPath)
-        {
-            this.assemblyPath = assemblyPath;
-        }
-
-        public Assembly Read()
-        {
-            return Assembly.LoadFrom(assemblyPath);
-        }
-    }
-
     public class AssemblyProcessor
     {
         public Assembly ass;
@@ -41,7 +25,7 @@ namespace DescriptionGenerator.Core
             if (processedElementNames == null)
                 processedElementNames = new List<string>();
             else if (processedElementNames.Contains(type.FullName)
-                || (!config.IncludeNested && processedElementNames.Count > 0))
+                || !config.IncludeNested && processedElementNames.Count > 0)
                 return new NodeContainer[] { };
 
             if (type.IsEnum)
@@ -56,7 +40,7 @@ namespace DescriptionGenerator.Core
         private NodeContainer[] ProcessClass(Type type, List<string> processedElementNames = null)
         {
             if (type == null
-                || (!type.IsClass && !type.IsInterface && !type.IsEnum)
+                || !type.IsClass && !type.IsInterface && !type.IsEnum
                 || type.Name.StartsWith('<')
                 || type.Namespace.StartsWith("System"))
                 return new NodeContainer[0];
@@ -74,8 +58,11 @@ namespace DescriptionGenerator.Core
             containers.Add(classContainer);
             classContainer.Properties.AddRange(result.properties);
 
+            // Metohds implementation is suspended for now
+            /*
             var methods = ProcessMethods(type);
             classContainer.Properties.AddRange(methods);
+            */
 
             return containers.ToArray();
         }
@@ -193,7 +180,7 @@ namespace DescriptionGenerator.Core
             int count = 0;
             var methodsContainers = new MethodContainer[methods.Length];
 
-            foreach(var method in methods)
+            foreach (var method in methods)
             {
                 var summary = method.GetSummary();
                 var name = method.Name;
@@ -267,65 +254,6 @@ namespace DescriptionGenerator.Core
             }
 
             return new StructElement(fieldInfo.Name, fieldRepresentation ?? string.Empty, fieldSummary);
-        }
-    }
-
-    public class MethodContainer : StructElement
-    {
-        private readonly List<(string name, Type type)> arguments;
-        private readonly Type output;
-        public readonly List<StructElement> ArgumentsElements;
-        public readonly StructElement OutputElement;
-
-        public MethodContainer(string name,
-                               string description,
-                               List<(string, Type)> arguments,
-                               Type output, 
-                               List<StructElement> argumentsElements,
-                               StructElement outputElement) : base(name, type: "method", description)
-        {
-            this.arguments = arguments ?? new();
-            this.output = output;
-            ArgumentsElements = argumentsElements;
-            OutputElement = outputElement;
-        }
-
-        public string GetOutputJson()
-        {
-            if (output == typeof(string) || output == typeof(void) || output.IsAbstract)
-                return "";
-
-            var outputObject = RuntimeHelpers.GetUninitializedObject(output);
-            return JsonConvert.SerializeObject(outputObject);
-        }
-
-        public string GetInputJson()
-        {
-            string[] output = new string[arguments.Count];
-            for (int i = 0; i < arguments.Count; i++)
-            {
-                var type = arguments[i].type;
-                var defaultValue = type.IsValueType
-                   ? RuntimeHelpers.GetUninitializedObject(type)
-                   : "null";
-                if (type == typeof(string))
-                    defaultValue = "";
-
-                output[i] = $"\"{arguments[i].name}\": {defaultValue}";
-            }
-
-            return "{" + string.Join($",{Environment.NewLine}", output) + "}";
-        }
-
-        public override IPrinter GetPrinter(PrinterType printerType)
-        {
-            switch (printerType)
-            {
-                case PrinterType.Markdown:
-                    return new MDMethodPrinter(this);
-                default:
-                    throw new NotImplementedException($"Type {printerType} is not supported for method element");
-            }
         }
     }
 }

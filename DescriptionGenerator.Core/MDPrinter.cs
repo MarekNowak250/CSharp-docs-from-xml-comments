@@ -1,15 +1,11 @@
-﻿using System.Runtime;
+﻿using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Types;
 
 namespace DescriptionGenerator.Core
 {
     public enum PrinterType
     {
         Markdown,
-    }
-
-    public interface IPrinter
-    {
-        public string Print();
     }
 
     internal class MDStructElementPrinter : IPrinter

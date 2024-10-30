@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DescriptionGenerator.Core;
+using DescriptionGenerator.Core.Interfaces;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;

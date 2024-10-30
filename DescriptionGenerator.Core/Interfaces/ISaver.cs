@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace DescriptionGenerator.Core
+namespace DescriptionGenerator.Core.Interfaces
 {
     public interface ISaver
     {
@@ -58,11 +58,11 @@ namespace DescriptionGenerator.Core
             {
                 var node = nodesToProcess[i];
 
-                if(!namespacePathMap.TryGetValue(node.Namespace, out string folderPath))
+                if (!namespacePathMap.TryGetValue(node.Namespace, out string folderPath))
                 {
-                    if(string.IsNullOrEmpty(node.Namespace))
+                    if (string.IsNullOrEmpty(node.Namespace))
                         folderPath = "";
-                    else if(_namespaceMap.TryGetValue(node.Namespace, out string namespaceMapped))
+                    else if (_namespaceMap.TryGetValue(node.Namespace, out string namespaceMapped))
                         folderPath = mapNamespaceToPath(namespaceMapped);
                     else
                         folderPath = mapNamespaceToPath(node.Namespace);
@@ -72,11 +72,11 @@ namespace DescriptionGenerator.Core
 
                 folderPath = Path.Combine(_rootFolderPath, folderPath);
                 Directory.CreateDirectory(folderPath);
-                
+
                 node.Namespace = folderPath;
             }
 
-            foreach(var node in nodesToProcess)
+            foreach (var node in nodesToProcess)
             {
                 if (_generateLinks)
                 {
@@ -103,8 +103,8 @@ namespace DescriptionGenerator.Core
 
         public Linker(IEnumerable<IDataContainer> dataContainers, string rootFolderPath)
         {
-            this._dataContainers = dataContainers;
-            this._rootFolderPath = rootFolderPath;
+            _dataContainers = dataContainers;
+            _rootFolderPath = rootFolderPath;
         }
 
         public void LinkDependencies(IDataContainer dataContainer)
@@ -117,8 +117,8 @@ namespace DescriptionGenerator.Core
 
                 if (corespondingNode is null)
                 {
-                     corespondingPath = allFilesInRoot.FirstOrDefault( fn => 
-                        Path.GetFileNameWithoutExtension(fn).Equals(prop.Name));
+                    corespondingPath = allFilesInRoot.FirstOrDefault(fn =>
+                       Path.GetFileNameWithoutExtension(fn).Equals(prop.Name));
 
                     if (string.IsNullOrEmpty(corespondingPath))
                         continue;

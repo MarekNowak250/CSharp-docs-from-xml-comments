@@ -1,4 +1,6 @@
-﻿namespace DescriptionGenerator.Core
+﻿using DescriptionGenerator.Core.Interfaces;
+
+namespace DescriptionGenerator.Core.Types
 {
     public class NodeContainer : StructElement, IDataContainer
     {

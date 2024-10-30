@@ -1,4 +1,6 @@
-﻿namespace DescriptionGenerator.Core
+﻿using DescriptionGenerator.Core.Interfaces;
+
+namespace DescriptionGenerator.Core
 {
     public class NamespaceMap
     {

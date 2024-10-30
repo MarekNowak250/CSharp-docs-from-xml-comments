@@ -1,4 +1,6 @@
 ﻿using DescriptionGenerator.Core;
+using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Types;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;

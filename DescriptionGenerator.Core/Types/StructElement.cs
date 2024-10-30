@@ -1,6 +1,8 @@
-﻿namespace DescriptionGenerator.Core
+﻿using DescriptionGenerator.Core.Interfaces;
+
+namespace DescriptionGenerator.Core.Types
 {
-    public class StructElement 
+    public class StructElement
     {
         public StructElement(string name, string type, string description)
         {
