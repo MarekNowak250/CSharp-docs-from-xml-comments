@@ -1,4 +1,6 @@
 ﻿using DescriptionGenerator.Core;
+using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Types;
 
 namespace DescriptionGenerator
 {
@@ -68,7 +70,7 @@ namespace DescriptionGenerator
 
             public string Type => GetType();
 
-            public string Namespace => "";
+            public string Namespace { get; set; }
 
             public abstract string GetType();
 

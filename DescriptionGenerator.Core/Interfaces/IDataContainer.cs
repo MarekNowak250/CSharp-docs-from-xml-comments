@@ -1,11 +1,14 @@
-﻿namespace DescriptionGenerator.Core
+﻿using DescriptionGenerator.Core.Types;
+
+namespace DescriptionGenerator.Core.Interfaces
 {
     public interface IDataContainer
     {
         string Description { get; }
         string Name { get; }
         string Type { get; }
-        string Namespace { get; set;  }
+        string Namespace { get; set; }
         List<StructElement> Properties { get; }
+        IPrinter GetPrinter(PrinterType printerType);
     }
 }

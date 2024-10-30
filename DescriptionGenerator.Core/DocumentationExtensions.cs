@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
 using System.Xml;
+using DescriptionGenerator.Core.Tags;
 
 namespace DescriptionGenerator.Core
 {
+
     // https://stackoverflow.com/questions/15602606/programmatically-get-summary-comments-at-runtime
     /// <summary>
     /// Utility class to provide documentation for various types where available with the assembly
@@ -55,6 +57,17 @@ namespace DescriptionGenerator.Core
             var element = memberInfo.GetDocumentation();
             var summaryElm = element?.SelectSingleNode("summary");
             if (summaryElm == null) return "";
+
+            foreach (XmlNode child in summaryElm)
+            {
+                switch (child.Name)
+                {
+                    case TagType.SEE_TAG:
+                        child.ProcessSeeTag();
+                        break;
+                }
+            }
+
             return summaryElm.InnerText.Trim();
         }
 

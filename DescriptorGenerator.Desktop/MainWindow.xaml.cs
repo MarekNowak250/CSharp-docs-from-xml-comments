@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DescriptionGenerator.Core;
+using DescriptionGenerator.Core.AssemblyRelated;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Input;
 
 namespace DescriptorGenerator.Desktop
 {
