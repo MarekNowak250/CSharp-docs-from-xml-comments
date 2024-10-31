@@ -7,7 +7,7 @@ namespace DescriptionGenerator.Core.Tags
         public static void ProcessSeeTag(this XmlNode seeTag)
         {
             if (seeTag.Name != "see")
-                throw new ArgumentException("Cannot process not see node!");
+                throw new ArgumentException("Cannot process - not a see node!");
 
             seeTag.InnerText = GetInnerText(seeTag);
         }
@@ -20,33 +20,23 @@ namespace DescriptionGenerator.Core.Tags
             switch (content)
             {
                 case string s when s.StartsWith("cref"):
-                    content = CrefProcessor.ProcessCref(content);
+                    content = SubElementsProcessor.Process(content, "cref");
+                    break;
+                case string s when s.StartsWith("href"):
+                    content = SubElementsProcessor.Process(content, "href");
+                    break;
+                case string s when s.StartsWith("langword"):
+                    return SubElementsProcessor.Process(content, "langword") + " ";
                     break;
                 default:
                     return seeNode.InnerText;
 
             }
 
-            if (seeNode.OuterXml.EndsWith("</see>"))
-            {
-                content = $"{content} {seeNode.InnerText}";
-            }
+            if (!seeNode.OuterXml.EndsWith("</see>") && string.IsNullOrEmpty(seeNode.InnerText))
+                seeNode.InnerText = content;
 
-            return content;
-        }
-
-        internal static class MemberProcessor
-        {
-            public static string ProcessCref(string crefString)
-            {
-                // cut cref=
-                var content = crefString.Substring(5).TrimStart();
-                if (crefString.EndsWith("/>"))
-                    // cut />
-                    content = content.Substring(0, content.Length - 2);
-
-                return content;
-            }
+            return $"({content})[{seeNode.InnerText}] ";
         }
     }
 }

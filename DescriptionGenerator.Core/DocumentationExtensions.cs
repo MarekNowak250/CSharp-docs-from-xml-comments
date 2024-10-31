@@ -93,6 +93,17 @@ namespace DescriptionGenerator.Core
             if (element == null) return string.Empty;
             var summaryElm = element?.SelectSingleNode("summary");
             if (summaryElm == null) return "";
+
+            foreach (XmlNode child in summaryElm)
+            {
+                switch (child.Name)
+                {
+                    case TagType.SEE_TAG:
+                        child.ProcessSeeTag();
+                        break;
+                }
+            }
+
             return summaryElm.InnerText.Trim();
         }
 
