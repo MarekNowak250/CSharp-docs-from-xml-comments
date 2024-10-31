@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using DescriptionGenerator.Core.Printing;
 
 namespace DescriptionGenerator.Core.Interfaces
 {

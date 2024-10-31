@@ -1,4 +1,5 @@
-﻿using DescriptionGenerator.Core.Types;
+﻿using DescriptionGenerator.Core.Printing;
+using DescriptionGenerator.Core.Types;
 
 namespace DescriptionGenerator.Core.Interfaces
 {

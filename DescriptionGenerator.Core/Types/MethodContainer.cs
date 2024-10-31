@@ -1,4 +1,5 @@
 ﻿using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Printing;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 

@@ -2,6 +2,20 @@
 
 namespace DescriptionGenerator.Core.Tags
 {
+    internal static class ParaTagProcessor
+    {
+        public static void ProcessParaTag(this XmlNode paraTag, string prevType)
+        {
+            if (paraTag.Name != "para")
+                throw new ArgumentException("Cannot process - not a see node!");
+
+            paraTag.InnerText = paraTag.InnerText + Environment.NewLine;
+            if (prevType != TagType.PARA_TAG)
+                paraTag.InnerText = Environment.NewLine + paraTag.InnerText;
+
+        }
+    }
+
     internal static class SeeTagProcessor
     {
         public static void ProcessSeeTag(this XmlNode seeTag)
@@ -27,7 +41,6 @@ namespace DescriptionGenerator.Core.Tags
                     break;
                 case string s when s.StartsWith("langword"):
                     return SubElementsProcessor.Process(content, "langword") + " ";
-                    break;
                 default:
                     return seeNode.InnerText;
 

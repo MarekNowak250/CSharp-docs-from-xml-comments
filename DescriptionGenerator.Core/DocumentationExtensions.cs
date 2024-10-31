@@ -58,6 +58,7 @@ namespace DescriptionGenerator.Core
             var summaryElm = element?.SelectSingleNode("summary");
             if (summaryElm == null) return "";
 
+            string prevType = string.Empty;
             foreach (XmlNode child in summaryElm)
             {
                 switch (child.Name)
@@ -65,7 +66,11 @@ namespace DescriptionGenerator.Core
                     case TagType.SEE_TAG:
                         child.ProcessSeeTag();
                         break;
+                    case TagType.PARA_TAG:
+                        child.ProcessParaTag(prevType);
+                        break;
                 }
+                prevType = child.Name;
             }
 
             return summaryElm.InnerText.Trim();

@@ -1,4 +1,5 @@
 ﻿using DescriptionGenerator.Core.Interfaces;
+using DescriptionGenerator.Core.Printing;
 
 namespace DescriptionGenerator.Core.Types
 {
@@ -14,6 +15,7 @@ namespace DescriptionGenerator.Core.Types
         public string Name { get; }
         public string Type { get; set; }
         public string Description { get; set; }
+        public string Remarks { get; set; }
 
         public virtual IPrinter GetPrinter(PrinterType printerType)
         {
